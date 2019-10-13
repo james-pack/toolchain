@@ -422,7 +422,7 @@ def _configure_toolchain(ctx):
         tool_path(name = "compat-ld", path = "/usr/bin/ld"),
         tool_path(name = "cpp", path = "/usr/bin/cpp"),
         tool_path(name = "dwp", path = "/usr/bin/dwp"),
-        tool_path(name = "gcc", path = "/usr/bin/cc"),
+        tool_path(name = "gcc", path = "/usr/bin/gcc"),
         tool_path(name = "gcov", path = "/usr/bin/gcov"),
         tool_path(name = "ld", path = "/usr/bin/ld"),
         tool_path(name = "nm", path = "/usr/bin/nm"),
