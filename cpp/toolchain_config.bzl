@@ -411,6 +411,8 @@ def _configure_toolchain(ctx):
         "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/",
 	"/usr/lib/gcc/x86_64-linux-gnu/7/include",
 	"/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed",
+	"/usr/lib/gcc/x86_64-linux-gnu/8/include",
+	"/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed",
 	"/usr/local/include",
         "/usr/include",
         "/usr/lib/jvm/default-java/include",
