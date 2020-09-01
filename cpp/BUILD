@@ -61,7 +61,7 @@ toolchain(
 cc_toolchain_config(
     name = "c++14-linux-x86_64-local-clang-config",
     cc_dialect = "c++14",
-    compiler = "/usr/bin/clang",
+    compiler = "/usr/bin/clang-10",
     cpu = "linux-x86_64",
 )
 
@@ -94,7 +94,7 @@ toolchain(
 cc_toolchain_config(
     name = "c++17-linux-x86_64-local-clang-config",
     cc_dialect = "c++17",
-    compiler = "/usr/bin/clang",
+    compiler = "/usr/bin/clang-10",
     cpu = "linux-x86_64",
 )
 
@@ -127,7 +127,7 @@ toolchain(
 cc_toolchain_config(
     name = "c++20-linux-x86_64-local-clang-config",
     cc_dialect = "c++2a",
-    compiler = "/usr/bin/clang",
+    compiler = "/usr/bin/clang-10",
     cpu = "linux-x86_64",
 )
 

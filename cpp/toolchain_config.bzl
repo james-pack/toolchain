@@ -409,6 +409,8 @@ def _configure_toolchain(ctx):
         "/usr/lib/llvm-5.0/lib/clang/5.0.0/include/",
         "/usr/lib/clang/6.0/include",
         "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/",
+        "/usr/lib/clang/10.0/include",
+        "/usr/lib/llvm-10.0/lib/clang/10.0.0/include/",
 	"/usr/lib/gcc/x86_64-linux-gnu/7/include",
 	"/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed",
 	"/usr/lib/gcc/x86_64-linux-gnu/8/include",
