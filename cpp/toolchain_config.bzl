@@ -119,7 +119,6 @@ def _configure_toolchain(ctx):
                 flag_groups = [
                     flag_group(
                         flags = [
-                            "-lstdc++",
                             "-lm",
                             "-lc",
                         ],
@@ -131,6 +130,7 @@ def _configure_toolchain(ctx):
                 flag_groups = [
                     flag_group(
                         flags = [
+                            "-Wl,-rpath,/usr/lib/llvm-10/lib",
                             "-Wl,-no-as-needed",
                             "-Wl,-z,relro,-z,now",
                         ],
@@ -198,6 +198,9 @@ def _configure_toolchain(ctx):
                 flag_groups = [
                     flag_group(
                         flags = [
+			    "-stdlib=libc++",
+			    "-I/usr/lib/llvm-10/include/c++/v1",
+			    "-I/usr/lib/llvm-10/lib",
                             "-U_FORTIFY_SOURCE",
                             "-D_FORTIFY_SOURCE=1",
                             "-fstack-protector",
@@ -409,8 +412,10 @@ def _configure_toolchain(ctx):
         "/usr/lib/llvm-5.0/lib/clang/5.0.0/include/",
         "/usr/lib/clang/6.0/include",
         "/usr/lib/llvm-6.0/lib/clang/6.0.0/include/",
-        "/usr/lib/clang/10.0/include",
-        "/usr/lib/llvm-10.0/lib/clang/10.0.0/include/",
+        "/usr/lib/clang/10/include",
+        "/usr/lib/llvm-10/lib/clang/10/include/",
+        "/usr/lib/llvm-10/lib/c++/include/",
+        "/usr/lib/llvm-10/include/c++/v1/",
 	"/usr/lib/gcc/x86_64-linux-gnu/7/include",
 	"/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed",
 	"/usr/lib/gcc/x86_64-linux-gnu/8/include",
