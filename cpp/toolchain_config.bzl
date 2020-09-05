@@ -16,7 +16,6 @@ load(
     "variable_with_value",
     "with_feature_set",
 )
-
 load(
     "@bazel_tools//tools/build_defs/cc:action_names.bzl",
     _ASSEMBLE_ACTION_NAME = "ASSEMBLE_ACTION_NAME",
@@ -139,6 +138,16 @@ def _configure_toolchain(ctx):
             ),
             flag_set(
                 actions = all_link_actions,
+                flag_groups = [flag_group(flags = ["-fsanitize=address"])],
+                with_features = [with_feature_set(features = ["dbg"])],
+            ),
+            flag_set(
+                actions = all_link_actions,
+                flag_groups = [flag_group(flags = ["-fsanitize=address"])],
+                with_features = [with_feature_set(features = ["fastbuild"])],
+            ),
+            flag_set(
+                actions = all_link_actions,
                 flag_groups = [flag_group(flags = ["-Wl,--gc-sections"])],
                 with_features = [with_feature_set(features = ["opt"])],
             ),
@@ -198,9 +207,9 @@ def _configure_toolchain(ctx):
                 flag_groups = [
                     flag_group(
                         flags = [
-			    "-stdlib=libc++",
-			    "-I/usr/lib/llvm-10/include/c++/v1",
-			    "-I/usr/lib/llvm-10/lib",
+                            "-stdlib=libc++",
+                            "-I/usr/lib/llvm-10/include/c++/v1",
+                            "-I/usr/lib/llvm-10/lib",
                             "-U_FORTIFY_SOURCE",
                             "-D_FORTIFY_SOURCE=1",
                             "-fstack-protector",
@@ -223,7 +232,7 @@ def _configure_toolchain(ctx):
                     _LTO_BACKEND_ACTION_NAME,
                     _CLIF_MATCH_ACTION_NAME,
                 ],
-                flag_groups = [flag_group(flags = ["-g"])],
+                flag_groups = [flag_group(flags = ["-g", "-fsanitize=address"])],
                 with_features = [with_feature_set(features = ["dbg"])],
             ),
             flag_set(
@@ -239,7 +248,7 @@ def _configure_toolchain(ctx):
                     _LTO_BACKEND_ACTION_NAME,
                     _CLIF_MATCH_ACTION_NAME,
                 ],
-                flag_groups = [flag_group(flags = ["-g", "-O"])],
+                flag_groups = [flag_group(flags = ["-g", "-O", "-fsanitize=address"])],
                 with_features = [with_feature_set(features = ["fastbuild"])],
             ),
             flag_set(
@@ -315,9 +324,9 @@ def _configure_toolchain(ctx):
                 ],
                 flag_groups = [
                     flag_group(
+                        expand_if_available = "user_compile_flags",
                         flags = ["%{user_compile_flags}"],
                         iterate_over = "user_compile_flags",
-                        expand_if_available = "user_compile_flags",
                     ),
                 ],
             ),
@@ -345,8 +354,8 @@ def _configure_toolchain(ctx):
                 ],
                 flag_groups = [
                     flag_group(
-                        flags = ["--sysroot=%{sysroot}"],
                         expand_if_available = "sysroot",
+                        flags = ["--sysroot=%{sysroot}"],
                     ),
                 ],
             ),
@@ -416,11 +425,11 @@ def _configure_toolchain(ctx):
         "/usr/lib/llvm-10/lib/clang/10/include/",
         "/usr/lib/llvm-10/lib/c++/include/",
         "/usr/lib/llvm-10/include/c++/v1/",
-	"/usr/lib/gcc/x86_64-linux-gnu/7/include",
-	"/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed",
-	"/usr/lib/gcc/x86_64-linux-gnu/8/include",
-	"/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed",
-	"/usr/local/include",
+        "/usr/lib/gcc/x86_64-linux-gnu/7/include",
+        "/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed",
+        "/usr/lib/gcc/x86_64-linux-gnu/8/include",
+        "/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed",
+        "/usr/local/include",
         "/usr/include",
         "/usr/lib/jvm/default-java/include",
         "/usr/lib/jvm/default-java/include/linux",
@@ -471,12 +480,12 @@ def _configure_toolchain(ctx):
     ]
 
 cc_toolchain_config = rule(
-    implementation = _configure_toolchain,
     attrs = {
         "cpu": attr.string(mandatory = True),
         "compiler": attr.string(mandatory = True),
         "cc_dialect": attr.string(mandatory = True),
     },
-    provides = [CcToolchainConfigInfo],
     executable = True,
+    provides = [CcToolchainConfigInfo],
+    implementation = _configure_toolchain,
 )
