@@ -118,6 +118,7 @@ def _configure_toolchain(ctx):
                 flag_groups = [
                     flag_group(
                         flags = [
+                            "-lc++abi",
                             "-lm",
                             "-lc",
                         ],
