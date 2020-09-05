@@ -118,6 +118,8 @@ def _configure_toolchain(ctx):
                 flag_groups = [
                     flag_group(
                         flags = [
+                            "-stdlib=libc++",
+                            "-lc++",
                             "-lc++abi",
                             "-lm",
                             "-lc",
